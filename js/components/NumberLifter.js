@@ -39,7 +39,13 @@ NumberLifter.prototype.checkLifterStatus = function(step) {
 }
 
 NumberLifter.prototype.applyValue = function(value) {
+  var THIS = this;
+  clearTimeout(this.valueEl.timer);
+  this.valueEl.classList.add('_change');
   this.valueEl.innerHTML = value;
+  this.valueEl.timer = setTimeout(function() {
+    THIS.valueEl.classList.remove('_change');
+  }, 150);
 }
 
 NumberLifter.prototype.doSuggest = function(size) {
