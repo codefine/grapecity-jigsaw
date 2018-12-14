@@ -5,9 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-    <div>上传图片</div>
-    <div></div>
+
+    <input id="upload-control" class="_hide" type="file">
+
+    <div class="container">
+        <div class="panel">
+            <div class="title">难度设定</div>
+            <div class="options _clearfix">
+                <div class="row _float">
+                    <div class="type">行</div>
+                    <div class="value">8</div>
+                    <div class="lifter">
+                        <div class="down"></div>
+                        <div class="up _disabled"></div>
+                    </div>
+                </div>
+                <div class="col _float">
+                    <div class="type">列</div>
+                    <div class="value">8</div>
+                    <div class="lifter">
+                        <div class="down"></div>
+                        <div class="up"></div>
+                    </div>
+                </div>
+            </div>
+            <button class="start _btn _disabled">开始</button>
+        </div>
+        <div id="area" class="main">
+            <div class="giveup _btn _hide">
+                <span></span>
+            </div>
+            <div id="playground" class="playground"></div>
+            <div class="mask"></div>
+            <div class="layer">
+                <div class="info _hide">大吉大利，今晚吃鸡</div>
+                <button id="upload-button" class="upload _btn">上传图片</button>
+                <button class="again _btn _hide">再玩一次</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="./js/polyfills.js"></script>
+    <script src="./js/components/ImageLoader.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 </html>
