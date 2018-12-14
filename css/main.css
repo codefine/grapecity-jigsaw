@@ -1,12 +1,12 @@
 body{
-    background-image: -webkit-linear-gradient(-85deg, #F7984C, #201912);
+    background-image: -webkit-linear-gradient(-75deg, #F7984C, #201912);
 }
 
 .header{
     text-align: center;
     position: absolute;
     left: 50%;
-    top: 50px;
+    top: 5%;
     transform: translateX(-50%);
 }
 .header > h1{
@@ -24,8 +24,8 @@ body{
 }
 
 .container{
-    width: 700px;
-    height: 700px;
+    width: 600px;
+    height: 600px;
     border-radius: 4px;
     position: absolute;
     left: 50%;
@@ -49,7 +49,7 @@ body{
 .container > .panel > .title{
     width: 100px;
     color: #F7984C;
-    margin: 80px auto;
+    margin: 60px auto;
     font-size: 20px;
     padding-bottom: 6px;
     border-bottom: 1px solid #9FA09F;
@@ -57,7 +57,7 @@ body{
 
 .container > .panel > .options{
     width: 100%;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
 }
 
 .container > .panel > .options > div{
