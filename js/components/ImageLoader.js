@@ -9,6 +9,7 @@ function ImageLoader(callback) {
 }
 
 ImageLoader.prototype.init = function() {
+    this.area = document.querySelector('#area');
     this.playground = document.querySelector('#playground');
     this.button = document.querySelector('#upload-button');
     this.input = document.querySelector('#upload-control');
@@ -42,11 +43,12 @@ ImageLoader.prototype.addListeners = function() {
 };
 
 ImageLoader.prototype.resizeImage = function(width, height) {
-    var maxWidth = this.playground.clientWidth;
-    var maxHeight = this.playground.clientHeight;
+    var padding = 20;
+    var maxWidth = this.area.clientWidth - padding;
+    var maxHeight = this.area.clientHeight - padding;
     var targetWidth = width;
     var targetHeight = height;
-    if (width > maxWidth || height > maxHeight) {
+    // if (width > maxWidth || height > maxHeight) {
         if (width / height > maxWidth / maxHeight) {
             targetWidth = maxWidth;
             targetHeight = Math.round(maxWidth * (height / width));
@@ -54,7 +56,9 @@ ImageLoader.prototype.resizeImage = function(width, height) {
             targetHeight = maxHeight;
             targetWidth = Math.round(maxHeight * (width / height));
         }
-    }
+    // } else {
+
+    // }
     return [targetWidth, targetHeight];
 }
 
@@ -68,6 +72,8 @@ ImageLoader.prototype.drawImage = function(width, height) {
 
 ImageLoader.prototype.updateDrawing = function(drawing, size) {
     this.playground.style.backgroundImage = 'url(' + drawing + ')';
+    this.playground.style.width = size[0] + 'px';
+    this.playground.style.height = size[1] + 'px';
     this.callback && this.callback({
         image: drawing,
         size: size
