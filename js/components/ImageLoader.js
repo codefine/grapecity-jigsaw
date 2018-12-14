@@ -37,7 +37,7 @@ ImageLoader.prototype.addListeners = function() {
         var originWidth = THIS.image.width;
         var originHeight = THIS.image.height;
         var size = THIS.resizeImage(originWidth, originHeight);
-        var drawing = THIS.drawImage(size[0], size[1]);
+        var drawing = THIS.getDrawing(size[0], size[1]);
         THIS.updateDrawing(drawing, size);
     });
 };
@@ -48,21 +48,17 @@ ImageLoader.prototype.resizeImage = function(width, height) {
     var maxHeight = this.area.clientHeight - padding;
     var targetWidth = width;
     var targetHeight = height;
-    // if (width > maxWidth || height > maxHeight) {
-        if (width / height > maxWidth / maxHeight) {
-            targetWidth = maxWidth;
-            targetHeight = Math.round(maxWidth * (height / width));
-        } else {
-            targetHeight = maxHeight;
-            targetWidth = Math.round(maxHeight * (width / height));
-        }
-    // } else {
-
-    // }
+    if (width / height > maxWidth / maxHeight) {
+        targetWidth = maxWidth;
+        targetHeight = Math.round(maxWidth * (height / width));
+    } else {
+        targetHeight = maxHeight;
+        targetWidth = Math.round(maxHeight * (width / height));
+    }
     return [targetWidth, targetHeight];
 }
 
-ImageLoader.prototype.drawImage = function(width, height) {
+ImageLoader.prototype.getDrawing = function(width, height) {
     this.canvas.width = width;
     this.canvas.height = height;
     this.canvasCtx.clearRect(0, 0, width, height);
@@ -70,10 +66,14 @@ ImageLoader.prototype.drawImage = function(width, height) {
     return this.canvas.toDataURL('image/jpeg');
 }
 
-ImageLoader.prototype.updateDrawing = function(drawing, size) {
+ImageLoader.prototype.updatePlaygroundStyles = function(drawing, size) {
     this.playground.style.backgroundImage = 'url(' + drawing + ')';
     this.playground.style.width = size[0] + 'px';
     this.playground.style.height = size[1] + 'px';
+}
+
+ImageLoader.prototype.updateDrawing = function(drawing, size) {
+    this.updatePlaygroundStyles(drawing, size);
     this.callback && this.callback({
         image: drawing,
         size: size

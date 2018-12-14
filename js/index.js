@@ -1,5 +1,9 @@
+var rowControls = new NumberLifter('#row');
+var colControls = new NumberLifter('#col');
+
 new ImageLoader(function(info) {
     var image = info.image;
     var size = info.size;
-    console.log(size);
+    rowControls.doSuggest(size);
+    colControls.doSuggest(size);
 });
