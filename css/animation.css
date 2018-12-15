@@ -1,0 +1,11 @@
+@keyframes borderbreath {
+  0%{
+    border-color: #313131;
+  }
+  50%{
+    border-color: #F7984C;
+  }
+  100%{
+    border-color: #313131;
+  }
+}

@@ -192,12 +192,19 @@ body{
     left: 0;
     top: 0;
     z-index: 1;
+    opacity: 1;
     box-shadow: 6px 6px 40px rgba(0, 0, 0, 0);
     cursor: pointer;
+    transform-origin: center center;
     transition: .3s;
 }
-.container > .main > .playground> .block.dragging{
+.container > .main > .playground> .block._dragging{
+    opacity: .8;
     transition: none;
+}
+.container > .main > .playground> .block._action{
+    border-width: 6px;
+    animation: borderbreath 1s linear infinite;
 }
 .container > .main > .playground> .block:hover{
     box-shadow: 6px 6px 40px rgba(0, 0, 0, .4);
