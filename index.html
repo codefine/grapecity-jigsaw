@@ -22,7 +22,7 @@
 
         <div class="container">
 
-            <div class="panel">
+            <div id="panel" class="panel">
                 <div class="title">难度设定</div>
                 <div class="options _clearfix">
                     <div id="row" class="row _float">
@@ -42,27 +42,33 @@
                         </div>
                     </div>
                 </div>
-                <button class="start _btn _disabled">开始</button>
+                <button id="start" class="start _btn _disabled">开始</button>
             </div>
 
             <div id="area" class="main">
-                <div class="giveup _btn _hide">
+                <div id="giveup" class="giveup _btn _hide">
                     <span></span>
                 </div>
+                <div id="background" class="background"></div>
                 <div id="playground" class="playground"></div>
                 <div class="mask"></div>
                 <div class="layer">
-                    <div class="info _hide">大吉大利，今晚吃鸡</div>
+                    <div class="intro">玩法: 通过点击方块(旋转)与拖拽方块完成拼图</div>
+                    <div class="win _hide">大吉大利，今晚吃鸡</div>
                     <button id="upload-button" class="upload _btn">上传图片</button>
-                    <button class="again _btn _hide">再玩一次</button>
+                    <button id="again" class="again _btn _hide">再玩一次</button>
                 </div>
             </div>
 
         </div>
 
+        <div class="snackbar">上传仅支持图片类型文件</div>
+
         <script src="./js/polyfills.js"></script>
+        <script src="./js/components/BlockGenerator.js"></script>
         <script src="./js/components/NumberLifter.js"></script>
         <script src="./js/components/ImageLoader.js"></script>
+        <script src="./js/components/Game.js"></script>
         <script src="./js/index.js"></script>
     </body>
 

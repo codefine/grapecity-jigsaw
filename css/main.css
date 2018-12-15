@@ -31,6 +31,10 @@ body{
     left: 50%;
     top: 50%;
     transform: translate(calc(-50% + 150px), -50%);
+    transition: .6s ease-in-out .3s;
+}
+.container._start{
+    transform: translate(-50%, -50%);
 }
 
 .container > .panel{
@@ -39,12 +43,18 @@ body{
     background: #313131;
     padding: 100px 20px;
     position: absolute;
-    left: calc(-300px + 4px);
+    left: 0;
     top: 0;
     border-radius: 4px 0 0 4px;
     z-index: 1;
     box-shadow: 6px 6px 40px rgba(0, 0, 0, .4);
     text-align: center;
+    transform: translateX(calc(-300px + 4px));
+    transition: .3s ease-in-out;
+}
+.container > .panel._start{
+    box-shadow: 0 0 0 rgba(0, 0, 0, .4);
+    transform: translateX(0);
 }
 .container > .panel > .title{
     width: 100px;
@@ -100,6 +110,7 @@ body{
     border-bottom: 10px solid transparent;
     position: absolute;
     top: 2px;
+    cursor: pointer;
     transition: .3s;
 }
 .lifter > div:hover{
@@ -157,6 +168,7 @@ body{
     top: 50%;
     transform: translate(-50%, -50%);
 }
+.container > .main > .background,
 .container > .main > .playground{
     width: 100%;
     height: 100%;
@@ -166,8 +178,31 @@ body{
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+.container > .main > .background{
+    z-index: 0;
+    opacity: .02;
+}
+.container > .main > .playground{
     z-index: 1;
 }
+.container > .main > .playground> .block{
+    border: 1px solid #313131;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    box-shadow: 6px 6px 40px rgba(0, 0, 0, 0);
+    cursor: pointer;
+    transition: .3s;
+}
+.container > .main > .playground> .block.dragging{
+    transition: none;
+}
+.container > .main > .playground> .block:hover{
+    box-shadow: 6px 6px 40px rgba(0, 0, 0, .4);
+}
+
 .container > .main > .mask{
     width: 100%;
     height: 100%;
@@ -186,7 +221,13 @@ body{
     transform: translate(-50%, -50%);
     text-align: center;
 }
-.container > .main > .layer> .info{
+.container > .main > .layer> .intro{
+    color: #F7984C;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 40px;
+}
+.container > .main > .layer> .win{
     color: #F7984C;
     font-weight: bold;
     font-size: 30px;
@@ -202,4 +243,23 @@ body{
 
 .container button:nth-last-of-type(1){
     margin-top: 20px;
+}
+
+.snackbar{
+    width: 200px;
+    background: #313131;
+    line-height: 50px;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 6px 6px 40px rgba(0, 0, 0, .4);
+    transform: translate(-50%, 160%);
+    transition: .3s;
+}
+.snackbar._show{
+    transform: translate(-50%, 0);
 }
