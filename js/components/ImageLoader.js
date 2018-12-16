@@ -33,7 +33,6 @@ ImageLoader.prototype.addListeners = function() {
         var file = event.target.files[0];
         if (file.type.includes('image')) {
             THIS.reader.readAsDataURL(file);
-            THIS.showSnack('加载图片成功');
         } else {
             THIS.showSnack('上传仅支持图片类型文件');
         }

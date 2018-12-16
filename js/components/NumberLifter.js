@@ -18,20 +18,19 @@ NumberLifter.prototype.init = function() {
 NumberLifter.prototype.addListeners = function() {
   var THIS = this;
   this.lifterDown.addEventListener('click', function() {
-    var value = THIS.checkLifterStatus(-1);
+    var value = parseInt(THIS.valueEl.innerHTML) - 1;
     THIS.applyValue(value);
   });
   this.lifterUp.addEventListener('click', function() {
-    var value = THIS.checkLifterStatus(1);
+    var value = parseInt(THIS.valueEl.innerHTML) + 1;
     THIS.applyValue(value);
   });
 };
 
-NumberLifter.prototype.checkLifterStatus = function(step) {
-  var value = parseInt(this.valueEl.innerHTML) + step;
-  if (value <= 1) {
+NumberLifter.prototype.checkLifterStatus = function(value) {
+  if (value <= 2) {
     this.lifterDown.classList.add('_disabled');
-    return 1;
+    return 2;
   } else {
     this.lifterDown.classList.remove('_disabled');
   }
@@ -40,9 +39,10 @@ NumberLifter.prototype.checkLifterStatus = function(step) {
 
 NumberLifter.prototype.applyValue = function(value) {
   var THIS = this;
-  clearTimeout(this.valueEl.timer);
+  value = this.checkLifterStatus(value);
   this.valueEl.classList.add('_change');
   this.valueEl.innerHTML = value;
+  clearTimeout(this.valueEl.timer);
   this.valueEl.timer = setTimeout(function() {
     THIS.valueEl.classList.remove('_change');
   }, 150);
@@ -52,19 +52,22 @@ NumberLifter.prototype.doSuggest = function(size) {
   var type = this.containerEl.substring(1);
   var width = size[0];
   var height = size[1];
+  var value = 1;
   if (width >= height) {
     if (type === 'row') {
-      this.applyValue(this.suggestiveCells);
+      value = this.suggestiveCells;
     } else {
-      this.applyValue( Math.ceil(width / height * this.suggestiveCells) );
+      value = Math.ceil(width / height * this.suggestiveCells);
     }
   } else {
     if (type === 'row') {
-      this.applyValue( Math.ceil(height / width * this.suggestiveCells) );
+      value = Math.ceil(height / width * this.suggestiveCells);
     } else {
-      this.applyValue(this.suggestiveCells);
+      value = this.suggestiveCells;
     }
   }
+  this.applyValue(value);
+  return value;
 };
 
 NumberLifter.prototype.getNumber = function() {

@@ -16,19 +16,19 @@
 
         <input id="upload-control" class="_hide" type="file">
 
-        <div class="header">
-            <h1>拼图游戏</h1>
-            <h2>GrapeCity</h2>
-        </div>
-
         <div class="container">
+
+            <div id="header" class="header">
+                <h1>拼图游戏</h1>
+                <h2>GrapeCity</h2>
+            </div>
 
             <div id="panel" class="panel">
                 <div class="title">难度设定</div>
                 <div class="options _clearfix">
                     <div id="row" class="row _float">
                         <div class="type">行</div>
-                        <div class="value">1</div>
+                        <div class="value">2</div>
                         <div class="lifter">
                             <div class="down"></div>
                             <div class="up"></div>
@@ -36,7 +36,7 @@
                     </div>
                     <div id="col" class="col _float">
                         <div class="type">列</div>
-                        <div class="value">1</div>
+                        <div class="value">2</div>
                         <div class="lifter">
                             <div class="down"></div>
                             <div class="up"></div>
@@ -47,7 +47,10 @@
             </div>
 
             <div id="area" class="main">
-                <div id="giveup" class="giveup _btn _hide">
+                <div id="giveup" class="giveup _btn">
+                    <span></span>
+                </div>
+                <div id="hint" class="hint _btn">
                     <span></span>
                 </div>
                 <div id="background" class="background"></div>
@@ -55,9 +58,8 @@
                 <div class="mask"></div>
                 <div class="layer">
                     <div class="intro">玩法: 通过点击方块(旋转)与拖拽方块完成拼图</div>
-                    <div class="win _hide">大吉大利，今晚吃鸡</div>
+                    <div class="win _hide">拼图鬼才，恭喜通关</div>
                     <button id="upload-button" class="upload _btn">上传图片</button>
-                    <button id="again" class="again _btn _hide">再玩一次</button>
                 </div>
             </div>
 
@@ -71,6 +73,7 @@
         <script src="./js/components/ImageLoader.js"></script>
         <script src="./js/components/Game.js"></script>
         <script src="./js/index.js"></script>
+        
     </body>
 
 </html>

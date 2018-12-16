@@ -9,6 +9,7 @@ BlockGenerator.prototype.init = function() {
   this.dragging = false;
   this.replacedId = null;
   this.state = [];
+  this.background = document.querySelector('#background');
   this.container = document.querySelector('#playground');
 };
 
@@ -35,6 +36,12 @@ BlockGenerator.prototype.getBlockState = function(id) {
   }
 };
 
+BlockGenerator.prototype.swapBlockState = function(id1, id2) {
+  var index1 = this.state.findIndex(function(block) { return block.id === id1 });
+  var index2 = this.state.findIndex(function(block) { return block.id === id2 });
+  this.state[index1] = this.state.splice(index2, 1, this.state[index1])[0];
+};
+
 BlockGenerator.prototype.updateBlockState = function(id, state) {
   for (var i = 0; i < this.state.length; i ++) {
     var target = this.state[i];
@@ -55,10 +62,10 @@ BlockGenerator.prototype.createABlock = function(image, width, height, col, inde
   var THIS = this;
   var left = width * (index % col);
   var top = height * Math.floor(index / col);
-  var rotation = [0, 90, 270][Math.floor(Math.random() * 3)];
+  var rotation = 0;
   var block = document.createElement('div');
   block.id = 'block-' + index;
-  block.classList.add('block');
+  block.classList.add('block', '_start');
   block.style.width = width + 'px';
   block.style.height = height + 'px';
   block.style.backgroundImage = 'url(' + image + ')';
@@ -81,6 +88,8 @@ BlockGenerator.prototype.createABlock = function(image, width, height, col, inde
 };
 
 BlockGenerator.prototype.generateBlocks = function(image, size, row, col) {
+  this.clearBlocks();
+  this.background.classList.remove('_bright');
   var blockWidth = size[0] / col;
   var blockHeight = size[1] / row;
   var total = row * col;
@@ -88,6 +97,30 @@ BlockGenerator.prototype.generateBlocks = function(image, size, row, col) {
     var block = this.createABlock(image, blockWidth, blockHeight, col, i);
     this.container.appendChild(block);
   }
+};
+
+BlockGenerator.prototype.clearBlocks = function(image, size, row, col) {
+  this.container.innerHTML = '';
+  this.state = [];
+};
+
+BlockGenerator.prototype.disruptBlocks = function() {
+  var THIS = this;
+  var orderPositions = this.state.map(function(block) {
+    return { l: block.l, t: block.t };
+  });
+  this.state.sort(function(a, b) {
+    return Math.random()>.5 ? -1 : 1;
+  });
+  this.state.forEach(function(block, i) {
+    var position = [orderPositions[i].l, orderPositions[i].t];
+    var rotation = [0, 180][Math.round(Math.random())];
+    THIS.moveBlock(block.el, position, rotation);
+    THIS.updateBlockState(block.id, { l: position[0], t: position[1], r: rotation });
+  });
+  this.check(function() {
+    THIS.disruptBlocks();
+  });
 };
 
 BlockGenerator.prototype.initOperations = function() {
@@ -108,11 +141,12 @@ BlockGenerator.prototype.initOperations = function() {
   });
   document.body.addEventListener('mousemove', function(event) {
     if (!lastBlock) return;
+    event.preventDefault();
     var currentX = event.clientX;
     var currentY = event.clientY;
     var disX = currentX - beginX;
     var disY = currentY - beginY;
-    if (Math.abs(disX) >= 1 || Math.abs(disY) >= 1) {
+    if (Math.abs(disX) >= 3 || Math.abs(disY) >= 3) {
       THIS.dragging = true;
       lastBlock.classList.add('_dragging');
       var targetX = lastBlockState.l + disX;
@@ -129,14 +163,15 @@ BlockGenerator.prototype.initOperations = function() {
     if (THIS.dragging) {
       if (typeof THIS.replacedId === 'number') {
         var replacedBlockState = THIS.getBlockState(THIS.replacedId);
-        THIS.change2BlocksPosition(lastBlockState, replacedBlockState);
+        THIS.swapBlocks(lastBlockState, replacedBlockState);
         replacedBlockState.el.classList.remove('_action');
       } else {
         THIS.moveBlock(lastBlock, [lastBlockState.l, lastBlockState.t], lastBlockState.r);
       }
     } else {
-      THIS.rotate();
+      THIS.rotate(lastBlockState);
     }
+    THIS.check();
     lastBlock.classList.remove('_dragging');
     lastBlock = null;
     lastBlockId = null;
@@ -152,10 +187,11 @@ BlockGenerator.prototype.moveBlock = function(target, position, rotation, isHove
 };
 
 BlockGenerator.prototype.showReplaceable = function(id, position) {
-  for (var i = 0; i < this.state.length; i ++) {
-    this.state[i].el.classList.remove('_action');
-    this.replacedId = null;
-  }
+  var THIS = this;
+  this.state.forEach(function(block) {
+    block.el.classList.remove('_action');
+    THIS.replacedId = null;
+  });
   for (var i = 0; i < this.state.length; i ++) {
     var target = this.state[i];
     if (target.id === id) continue;
@@ -169,7 +205,7 @@ BlockGenerator.prototype.showReplaceable = function(id, position) {
   }
 };
 
-BlockGenerator.prototype.change2BlocksPosition = function(draggedState, replacedState) {
+BlockGenerator.prototype.swapBlocks = function(draggedState, replacedState) {
   var draggedBlock = draggedState.el;
   var replacedBlock = replacedState.el;
   var originPosition = [draggedState.l, draggedState.t];
@@ -177,29 +213,48 @@ BlockGenerator.prototype.change2BlocksPosition = function(draggedState, replaced
   var draggedRotation = draggedState.r;
   var replacedRotation = replacedState.r;
   replacedBlock.style.zIndex = 2;
+  this.swapBlockState(draggedState.id, replacedState.id);
   this.moveBlock(draggedBlock, targetPosition, draggedRotation);
   this.moveBlock(replacedBlock, originPosition, replacedRotation);
   this.updateBlockState(draggedState.id, { l: targetPosition[0], t: targetPosition[1] });
   this.updateBlockState(replacedState.id, { l: originPosition[0], t: originPosition[1] });
 };
 
-BlockGenerator.prototype.rotate = function() {
-  console.log('旋转');
-  console.log(this.state);
+BlockGenerator.prototype.rotate = function(block) {
+  var rotation = block.r === 180 ? 0 : 180;
+  this.updateBlockState(block.id, { r: rotation });
+  this.moveBlock(block.el, [block.l, block.t], rotation, true);
 };
 
-// BlockGenerator.prototype.getTranslate = function(target) {
-//   var reg = /translate\((\d+(\.\d+)?)px\,\s*(\d+(\.\d+)?)px\)/;
-//   var matches = target.style.transform.match(reg);
-//   return [parseFloat(matches[1]), parseFloat(matches[3])];
-// };
+BlockGenerator.prototype.check = function(redo) {
+  var THIS = this;
+  var result = this.state.reduce(function(prev, next) {
+    var idOrdered = prev.id === next.id - 1;
+    var rotationOrdered = prev.r % 360 === 0 && next.r % 360 === 0;
+    if (idOrdered && rotationOrdered) {
+      return next;
+    } else {
+      return false;
+    }
+  });
+  if (result) {
+    if (redo) {
+      redo();
+    } else {
+      THIS.callback && THIS.callback();
+    }
+  }
+};
 
-// BlockGenerator.prototype.getRotation = function(target) {
-//   var reg = /rotate\((-?\d+)deg\)/;
-//   var matches = target.style.transform.match(reg);
-//   return Number(matches[1]);
-// };
-
-BlockGenerator.prototype.operationEmitter = function() {
-  console.log('进行了操作');
+BlockGenerator.prototype.emitter = function(callback) {
+  var THIS = this;
+  this.callback = function() {
+    THIS.background.classList.add('_bright');
+    THIS.state.forEach(function(block) {
+      block.el.classList.remove('_start');
+    });
+    setTimeout(function() {
+      callback();
+    }, 800);
+  };
 };
