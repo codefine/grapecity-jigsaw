@@ -1,3 +1,30 @@
+@keyframes breath {
+  0%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes breathAndRotate {
+  0%{
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  50%{
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+  100%{
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
 @keyframes borderbreath {
   0%{
     border-color: #313131;

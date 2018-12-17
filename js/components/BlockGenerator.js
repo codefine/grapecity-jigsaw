@@ -2,6 +2,9 @@
 
 function BlockGenerator() {
   this.init();
+  this.initRotationHelper();
+  this.initPositionHelper();
+  this.addListeners();
   this.initOperations();
 }
 
@@ -9,8 +12,77 @@ BlockGenerator.prototype.init = function() {
   this.dragging = false;
   this.replacedId = null;
   this.state = [];
-  this.background = document.querySelector('#background');
   this.container = document.querySelector('#playground');
+  this.background = document.querySelector('#background');
+  this.hint = document.querySelector('#hint');
+};
+
+BlockGenerator.prototype.initRotationHelper = function() {
+  this.rotationHelper = document.createElement('div');
+  this.rotationHelper.classList.add('rotation-helper');
+  this.lastRotationHelped = null;
+};
+
+BlockGenerator.prototype.addRotationHelper = function(error) {
+  var targetState = this.state[error.index];
+  targetState.el.appendChild(this.rotationHelper);
+  this.lastRotationHelped = targetState.el;
+};
+
+BlockGenerator.prototype.removeRotationHelper = function() {
+  this.lastRotationHelped && this.lastRotationHelped.removeChild(this.rotationHelper);
+  this.lastRotationHelped = null;
+};
+
+BlockGenerator.prototype.initPositionHelper = function() {
+  this.positionHelper = document.createElement('div');
+  this.positionHelper.classList.add('position-helper');
+  this.positionHelperShow = false;
+};
+
+BlockGenerator.prototype.addPositionHelper = function(error) {
+  this.positionHelperShow = true;
+  this.container.appendChild(this.positionHelper);
+
+  var originState = this.state[error.id];
+  var targetState = this.state[error.index];
+  var originPosition = [originState.l, originState.t];
+  var targetPosition = [targetState.l, targetState.t];
+  var disX = targetPosition[0] - originPosition[0];
+  var disY = targetPosition[1] - originPosition[1];
+  // var helfDeg = (disY / disX) > 0 ? 0 : 180;
+  var helperLength = Math.sqrt( disX * disX + disY * disY );
+  var helperRotation = Math.atan(disY / disX) * 180 / Math.PI;
+  helperRotation === -90 && (helperRotation = 90);
+  this.positionHelper.style.width = helperLength + 'px';
+  this.positionHelper.style.left = targetPosition[0] + targetState.w / 2 + 'px';
+  this.positionHelper.style.top = targetPosition[1] + targetState.h / 2 + 'px';
+  this.positionHelper.style.transform = 'rotate(' + helperRotation + 'deg)';
+  console.log(originState);
+  console.log(targetState);
+  console.log(helperLength, helperRotation);
+};
+
+BlockGenerator.prototype.removePositionHelper = function() {
+  this.positionHelperShow && this.container.removeChild(this.positionHelper);
+  this.positionHelperShow = false;
+};
+
+BlockGenerator.prototype.addListeners = function() {
+  var THIS = this;
+  this.hint.addEventListener('click', function() {
+    THIS.doHelp();
+  });
+};
+
+BlockGenerator.prototype.doHelp = function() {
+  var error = this.check();
+  if (error.type === 'rotation') {
+    this.addRotationHelper(error);
+  } else if (error.type === 'position') {
+    this.addPositionHelper(error);
+  }
+  console.log(error);
 };
 
 BlockGenerator.prototype.generateBlockState = function(block, id, width, height, left, top, rotation) {
@@ -131,10 +203,14 @@ BlockGenerator.prototype.initOperations = function() {
   var lastBlockId = null;
   var lastBlockState = {};
   this.container.addEventListener('mousedown', function(event) {
-    if (event.target.classList.contains('block')) {
+    var target = event.target;
+    if (target.classList.contains('rotation-helper')) {
+      target = target.parentNode;
+    }
+    if (target.classList.contains('block')) {
       beginX = event.clientX;
       beginY = event.clientY;
-      lastBlock = event.target;
+      lastBlock = target;
       lastBlockId = Number(lastBlock.id.split('-')[1]);
       lastBlockState = THIS.getBlockState(lastBlockId);
     }
@@ -228,31 +304,46 @@ BlockGenerator.prototype.rotate = function(block) {
 
 BlockGenerator.prototype.check = function(redo) {
   var THIS = this;
-  var result = this.state.reduce(function(prev, next) {
-    var idOrdered = prev.id === next.id - 1;
-    var rotationOrdered = prev.r % 360 === 0 && next.r % 360 === 0;
-    if (idOrdered && rotationOrdered) {
-      return next;
-    } else {
-      return false;
+  this.removeRotationHelper();
+  this.removePositionHelper();
+  var error = {
+    index: 0,
+    id: null,
+    type: null
+  };
+  for (var i = 0; i < this.state.length; i ++) {
+    var block = this.state[i];
+    var idOrdered = block.id === i;
+    var rotationOrdered = block.r % 360 === 0;
+    if (!rotationOrdered || !idOrdered) {
+      error.id = block.id;
+      error.type = !rotationOrdered ? 'rotation' : ( !idOrdered ? 'position' : null );
+      error.index = i;
+      break;
     }
-  });
-  if (result) {
+  }
+  if (i === this.state.length) {
     if (redo) {
       redo();
     } else {
       THIS.callback && THIS.callback();
     }
+  } else {
+    return error;
   }
+};
+
+BlockGenerator.prototype.showBackground = function() {
+  this.background.classList.add('_bright');
+  this.state.forEach(function(block) {
+    block.el.classList.remove('_start');
+  });
 };
 
 BlockGenerator.prototype.emitter = function(callback) {
   var THIS = this;
   this.callback = function() {
-    THIS.background.classList.add('_bright');
-    THIS.state.forEach(function(block) {
-      block.el.classList.remove('_start');
-    });
+    THIS.showBackground();
     setTimeout(function() {
       callback();
     }, 800);

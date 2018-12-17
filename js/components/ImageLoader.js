@@ -37,7 +37,7 @@ ImageLoader.prototype.addListeners = function() {
             THIS.showSnack('上传仅支持图片类型文件');
         }
     });
-    this.image.addEventListener('load', () => {
+    this.image.addEventListener('load', function() {
         var originWidth = THIS.image.width;
         var originHeight = THIS.image.height;
         var size = THIS.resizeImage(originWidth, originHeight);

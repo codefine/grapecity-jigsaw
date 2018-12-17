@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 var game = new Game();
 
 var blocks = new BlockGenerator();
@@ -21,9 +23,13 @@ var loader = new ImageLoader(function(info) {
     onStart: function() {
       blocks.disruptBlocks();
       blocks.emitter(game.onSuccess);
+      loader.showSnack('计时开始');
     },
-    onSuccess: function() {
-      console.log('成功');
+    onSuccess: function(time) {
+      // console.log(time);
+    },
+    onGiveup: function() {
+      blocks.showBackground();
     }
   });
 });
