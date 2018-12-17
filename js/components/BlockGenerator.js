@@ -38,29 +38,30 @@ BlockGenerator.prototype.initPositionHelper = function() {
   this.positionHelper = document.createElement('div');
   this.positionHelper.classList.add('position-helper');
   this.positionHelperShow = false;
+  var leftPoint = document.createElement('span');
+  leftPoint.classList.add('leftPoint');
+  this.positionHelper.appendChild(leftPoint);
+  var rightPoint = document.createElement('span');
+  rightPoint.classList.add('rightPoint');
+  this.positionHelper.appendChild(rightPoint);
 };
 
 BlockGenerator.prototype.addPositionHelper = function(error) {
   this.positionHelperShow = true;
   this.container.appendChild(this.positionHelper);
-
   var originState = this.state[error.id];
   var targetState = this.state[error.index];
   var originPosition = [originState.l, originState.t];
   var targetPosition = [targetState.l, targetState.t];
   var disX = targetPosition[0] - originPosition[0];
   var disY = targetPosition[1] - originPosition[1];
-  // var helfDeg = (disY / disX) > 0 ? 0 : 180;
   var helperLength = Math.sqrt( disX * disX + disY * disY );
   var helperRotation = Math.atan(disY / disX) * 180 / Math.PI;
-  helperRotation === -90 && (helperRotation = 90);
+  var helperPosition = targetPosition[0] < originPosition[0] ? targetPosition : originPosition;
   this.positionHelper.style.width = helperLength + 'px';
-  this.positionHelper.style.left = targetPosition[0] + targetState.w / 2 + 'px';
-  this.positionHelper.style.top = targetPosition[1] + targetState.h / 2 + 'px';
+  this.positionHelper.style.left = helperPosition[0] + targetState.w / 2 + 'px';
+  this.positionHelper.style.top = helperPosition[1] + targetState.h / 2 + 'px';
   this.positionHelper.style.transform = 'rotate(' + helperRotation + 'deg)';
-  console.log(originState);
-  console.log(targetState);
-  console.log(helperLength, helperRotation);
 };
 
 BlockGenerator.prototype.removePositionHelper = function() {
@@ -165,10 +166,12 @@ BlockGenerator.prototype.generateBlocks = function(image, size, row, col) {
   var blockWidth = size[0] / col;
   var blockHeight = size[1] / row;
   var total = row * col;
+  var fragment = document.createDocumentFragment();
   for (var i = 0; i < total; i ++) {
     var block = this.createABlock(image, blockWidth, blockHeight, col, i);
-    this.container.appendChild(block);
+    fragment.appendChild(block);
   }
+  this.container.appendChild(fragment);
 };
 
 BlockGenerator.prototype.clearBlocks = function(image, size, row, col) {
