@@ -12,6 +12,8 @@ ImageLoader.prototype.init = function() {
     this.area = document.querySelector('#area');
     this.background = document.querySelector('#background');
     this.playground = document.querySelector('#playground');
+    this.mask = document.querySelector('.mask');
+    this.layer = document.querySelector('.layer');
     this.button = document.querySelector('#upload-button');
     this.input = document.querySelector('#upload-control');
     this.snack = document.querySelector('.snackbar');
@@ -79,6 +81,9 @@ ImageLoader.prototype.updatePlaygroundStyles = function(drawing, size) {
 };
 
 ImageLoader.prototype.updateDrawing = function(drawing, size) {
+    this.mask.classList.add('_hide');
+    this.layer.classList.add('_hide');
+    this.background.classList.add('_bright');
     this.updatePlaygroundStyles(drawing, size);
     this.callback && this.callback({
         image: drawing,

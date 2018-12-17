@@ -10,9 +10,11 @@ var colControls = new NumberLifter('#col');
 var loader = new ImageLoader(function(info) {
   var image = info.image;
   var size = info.size;
-  var row = rowControls.doSuggest(size);
-  var col = colControls.doSuggest(size);
-  loader.showSnack('加载图片成功，推荐难度:' + row + 'x' + col);
+  var row = rowControls.getNumber();
+  var col = colControls.getNumber();
+  // var row = rowControls.doSuggest(size);
+  // var col = colControls.doSuggest(size);
+  // loader.showSnack('加载图片成功，推荐难度:' + row + 'x' + col);
   game.gameProcessControl({
     image: image,
     onBeforeStart: function() {
