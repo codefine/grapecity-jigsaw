@@ -12,14 +12,18 @@
     </head>
 
     <body>
+
+        <!-- 原生上传控件，通过自定义上传按钮关联触发(隐藏) -->
         <input id="upload-control" class="_hide" type="file" />
 
         <div class="container">
+            
             <div id="header" class="header">
                 <h1>拼图游戏</h1>
                 <h2>GrapeCity</h2>
             </div>
 
+            <!-- 左侧面板，定义游戏难度，开始游戏 -->
             <div id="panel" class="panel">
                 <div class="title">难度设定</div>
                 <div class="options _clearfix">
@@ -43,11 +47,12 @@
                 <button id="start" class="start _btn _disabled">开始</button>
             </div>
 
+            <!-- 右侧图片裁切展示以及游戏区域 -->
             <div id="area" class="main">
                 <div id="giveup" class="giveup _btn"><span></span> <i>返回</i></div>
                 <div id="hint" class="hint _btn"><span></span> <i>提示</i></div>
-                <div id="background" class="background"></div>
-                <div id="playground" class="playground"></div>
+                <div id="background" class="background"></div> <!-- 图片裁切展示区域 -->
+                <div id="playground" class="playground"></div> <!-- 游戏区域 -->
                 <div class="mask"></div>
                 <div class="layer">
                     <div class="intro">玩法: 通过点击方块(旋转)与拖拽方块完成拼图</div>

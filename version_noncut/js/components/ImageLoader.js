@@ -47,6 +47,7 @@ ImageLoader.prototype.addListeners = function() {
 };
 
 ImageLoader.prototype.resizeImage = function(width, height) {
+    // 根据游戏区域最大尺寸(即容器尺寸-内填充)计算图片最大尺寸(等比缩放)
     var padding = 20;
     var maxWidth = this.area.clientWidth - padding;
     var maxHeight = this.area.clientHeight - padding;

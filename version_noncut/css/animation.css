@@ -1,38 +1,47 @@
+/* 图块互换提示 */
 @keyframes breath {
-  0%{
-    opacity: 1;
-  }
-  50%{
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
+/* 图块旋转提示 */
 @keyframes breathAndRotate {
-  0%{
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  50%{
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(180deg);
-  }
-  100%{
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
+    0% {
+        opacity: 0;
+        -webkit-transform: translate(-50%, -50%) rotate(0deg);
+        -moz-transform: translate(-50%, -50%) rotate(0deg);
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        -webkit-transform: translate(-50%, -50%) rotate(180deg);
+        -moz-transform: translate(-50%, -50%) rotate(180deg);
+        transform: translate(-50%, -50%) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translate(-50%, -50%) rotate(360deg);
+        -moz-transform: translate(-50%, -50%) rotate(360deg);
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 
+/* 拖拽底层元素提示 */
 @keyframes borderbreath {
-  0%{
-    border-color: #313131;
-  }
-  50%{
-    border-color: #F7984C;
-  }
-  100%{
-    border-color: #313131;
-  }
+    0% {
+        border-color: #313131;
+    }
+    50% {
+        border-color: #F7984C;
+    }
+    100% {
+        border-color: #313131;
+    }
 }

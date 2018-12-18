@@ -47,6 +47,8 @@ BlockGenerator.prototype.initPositionHelper = function() {
 };
 
 BlockGenerator.prototype.addPositionHelper = function(error) {
+    // 已知两点坐标，以x值较小的点为原点
+    // 求向量以及向量和x轴夹角
     this.positionHelperShow = true;
     this.container.appendChild(this.positionHelper);
     var originState = this.state[error.id];
@@ -147,16 +149,21 @@ BlockGenerator.prototype.createABlock = function(image, width, height, col, inde
     block.style.height = height + 'px';
     block.style.backgroundImage = 'url(' + image + ')';
     block.style.backgroundPosition = String(-left) + 'px ' + String(-top) + 'px';
+    block.style.webkitTransform = 'translate(' + left + 'px, ' + top + 'px) rotate(' + rotation + 'deg)';
     block.style.transform = 'translate(' + left + 'px, ' + top + 'px) rotate(' + rotation + 'deg)';
+
+    // 模拟hover事件(translate和rotate的值均不确定，不能通过css定义hover)
     block.addEventListener('mouseenter', function() {
         if (THIS.dragging) return;
         var blockState = THIS.getBlockState(index);
+        block.style.webkitTransform = 'translate(' + blockState.l + 'px, ' + blockState.t + 'px) rotate(' + blockState.r + 'deg) scale(1.1)';
         block.style.transform = 'translate(' + blockState.l + 'px, ' + blockState.t + 'px) rotate(' + blockState.r + 'deg) scale(1.1)';
         block.style.zIndex = 3;
     });
     block.addEventListener('mouseleave', function() {
         if (THIS.dragging) return;
         var blockState = THIS.getBlockState(index);
+        block.style.webkitTransform = 'translate(' + blockState.l + 'px, ' + blockState.t + 'px) rotate(' + blockState.r + 'deg)';
         block.style.transform = 'translate(' + blockState.l + 'px, ' + blockState.t + 'px) rotate(' + blockState.r + 'deg)';
         block.style.zIndex = 1;
     });
@@ -266,10 +273,13 @@ BlockGenerator.prototype.initOperations = function() {
 BlockGenerator.prototype.moveBlock = function(target, position, rotation, isHover) {
     var scale = isHover ? ' scale(1.1)' : '';
     var transform = 'translate(' + position[0] + 'px, ' + position[1] + 'px) rotate(' + rotation + 'deg)' + scale;
+    target.style.webkitTransform = transform;
     target.style.transform = transform;
 };
 
 BlockGenerator.prototype.showReplaceable = function(id, position) {
+    // 已知范围(leftTop, rightBottom)以及点的坐标position
+    // 求该范围内的唯一点
     var THIS = this;
     this.state.forEach(function(block) {
         block.el.classList.remove('_action');
@@ -277,7 +287,7 @@ BlockGenerator.prototype.showReplaceable = function(id, position) {
     });
     for (var i = 0; i < this.state.length; i++) {
         var target = this.state[i];
-        if (target.id === id) continue;
+        if (target.id === id) continue; // 自我排除
         var lt = target.lt;
         var rb = target.rb;
         if (position[0] > lt[0] && position[0] < rb[0] && position[1] > lt[1] && position[1] < rb[1]) {

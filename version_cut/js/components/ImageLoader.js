@@ -97,6 +97,8 @@ ImageLoader.prototype.getComputedInfo = function(row, col) {
     var playgroundWidth = 0;
     var playgroundHeight = 0;
     var direction = null;
+    
+    // 根据行列关系确定游戏区域在容器范围内的最大尺寸
     if (row > col) {
         playgroundHeight = maxHeight;
         playgroundWidth = col * maxHeight / row;
@@ -107,6 +109,8 @@ ImageLoader.prototype.getComputedInfo = function(row, col) {
         playgroundWidth = maxWidth;
         playgroundHeight = maxHeight;
     }
+
+    // 根据游戏区域尺寸确定图片最大尺寸
     if (playgroundWidth / playgroundHeight > this.image.width / this.image.height) {
         imageWidth = playgroundWidth;
         imageHeight = playgroundWidth * (this.image.height / this.image.width);
@@ -117,6 +121,8 @@ ImageLoader.prototype.getComputedInfo = function(row, col) {
         imageWidth = playgroundWidth;
         imageHeight = playgroundHeight;
     }
+
+    // 分别比较游戏区域以及图片的长宽，确定可拖拽的方向
     if (playgroundWidth < imageWidth && playgroundHeight === imageHeight) {
         direction = 'x';
     } else if (playgroundWidth === imageWidth && playgroundHeight < imageHeight) {
@@ -134,6 +140,7 @@ ImageLoader.prototype.getComputedInfo = function(row, col) {
 ImageLoader.prototype.moveDrawing = function(position, info) {
     var center = [this.area.clientWidth / 2, this.area.clientHeight / 2];
     var direction = info.direction;
+    // 最大拖拽距离限制
     if (direction === 'x') {
         var x = position[0];
         var rangeLeft = center[0] - (info.background[0] - info.playground[0]) / 2;
@@ -152,6 +159,7 @@ ImageLoader.prototype.moveDrawing = function(position, info) {
 };
 
 ImageLoader.prototype.getCutPosition = function(info) {
+    // 计算游戏区域相对于拖拽后图片区域的位置
     var backgroundSize = info.background;
     var playgroundSize = info.playground;
     var backgroundPosition = [this.background.offsetLeft, this.background.offsetTop];

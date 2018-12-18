@@ -8,22 +8,26 @@ var rowControls = new NumberLifter('#row');
 var colControls = new NumberLifter('#col');
 
 var loader = new ImageLoader(function() {
+
     var row = rowControls.getNumber();
     var col = colControls.getNumber();
     var info = loader.updateDrawing(row, col);
+
     rowControls.onChange = function() {
+        loader.reset();
         var row = rowControls.getNumber();
         var col = colControls.getNumber();
-        loader.reset();
         loader.updateDrawing(row, col);
     };
     colControls.onChange = function() {
+        loader.reset();
         var row = rowControls.getNumber();
         var col = colControls.getNumber();
-        loader.reset();
         loader.updateDrawing(row, col);
     };
+
     loader.showSnack('拖拽图片至理想位置，开始游戏', 3000);
+
     game.gameProcessControl({
         image: info.image,
         onBeforeStart: function() {
@@ -45,4 +49,5 @@ var loader = new ImageLoader(function() {
             blocks.showBackground();
         }
     });
+    
 });
