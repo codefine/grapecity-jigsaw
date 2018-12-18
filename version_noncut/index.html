@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>拼图游戏 - GrapeCity</title>
+        <link rel="icon" type="image/png" href="../favicon.png" sizes="32x32">
+        <link rel="stylesheet" href="./css/reset.css">
+        <link rel="stylesheet" href="./css/animation.css">
+        <link rel="stylesheet" href="./css/main.css">
+    </head>
+
+    <body>
+
+        <input id="upload-control" class="_hide" type="file">
+
+        <div class="container">
+
+            <div id="header" class="header">
+                <h1>拼图游戏</h1>
+                <h2>GrapeCity</h2>
+            </div>
+
+            <div id="panel" class="panel">
+                <div class="title">难度设定</div>
+                <div class="options _clearfix">
+                    <div id="row" class="row _float">
+                        <div class="type">行</div>
+                        <div class="value">2</div>
+                        <div class="lifter">
+                            <div class="down"></div>
+                            <div class="up"></div>
+                        </div>
+                    </div>
+                    <div id="col" class="col _float">
+                        <div class="type">列</div>
+                        <div class="value">2</div>
+                        <div class="lifter">
+                            <div class="down"></div>
+                            <div class="up"></div>
+                        </div>
+                    </div>
+                </div>
+                <button id="start" class="start _btn _disabled">开始</button>
+            </div>
+
+            <div id="area" class="main">
+                <div id="giveup" class="giveup _btn">
+                    <span></span>
+                    <i>返回</i>
+                </div>
+                <div id="hint" class="hint _btn">
+                    <span></span>
+                    <i>提示</i>
+                </div>
+                <div id="background" class="background"></div>
+                <div id="playground" class="playground"></div>
+                <div class="mask"></div>
+                <div class="layer">
+                    <div class="intro">玩法: 通过点击方块(旋转)与拖拽方块完成拼图</div>
+                    <div class="win _hide">拼图鬼才，恭喜通关</div>
+                    <div class="timer _hide">耗时: 11s</div>
+                    <button id="upload-button" class="upload _btn">上传图片</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="snackbar">上传仅支持图片类型文件</div>
+
+        <script src="./js/polyfills.js"></script>
+        <script src="./js/components/BlockGenerator.js"></script>
+        <script src="./js/components/NumberLifter.js"></script>
+        <script src="./js/components/ImageLoader.js"></script>
+        <script src="./js/components/Game.js"></script>
+        <script src="./js/index.js"></script>
+        
+    </body>
+
+</html>
