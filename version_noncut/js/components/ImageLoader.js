@@ -86,12 +86,13 @@ ImageLoader.prototype.updateDrawing = function(drawing, size) {
     });
 };
 
-ImageLoader.prototype.showSnack = function(content) {
+ImageLoader.prototype.showSnack = function(content, time) {
+    time = typeof time === 'number' ? time : 2000;
     var THIS = this;
     this.snack.innerHTML = content;
     this.snack.classList.add('_show');
     clearTimeout(this.snack.timer);
     this.snack.timer = setTimeout(function() {
         THIS.snack.classList.remove('_show');
-    }, 2000);
+    }, time);
 };

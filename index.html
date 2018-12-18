@@ -1,121 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>拼图游戏简易入口 - GrapeCity</title>
-    <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
-    <style>
-        body, html{
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-        body{
-            margin: 0;
-            padding: 0;
-            background-image: -webkit-linear-gradient(-75deg, #F7984C, #201912);
-        }
-        h1, h2{
-            padding: 0;
-            margin: 0;
-        }
-        body *{
-            box-sizing: border-box;
-        }
-        a{
-            text-decoration: none;
-        }
-        a:link, a:active, a:visited{
-            color: #000;
-        }
-        a, span{
-            display: block;
-        }
-        .header{
-            position: absolute;
-            left: -160px;
-            top: 50%;
-            -webkit-writing-mode: vertical-rl;
-            writing-mode: vertical-rl;
-            transform: translateY(-50%);
-        }
-        .header > h1{
-            font-size: 36px;
-            color: #313131;
-            border-left: 1px solid #fff;
-            padding-left: 6px;
-            text-shadow: -1px 1px 2px rgba(0, 0, 0, .2);
-        }
-        .header > h2{
-            padding-right: 6px;
-            padding-top: 80px;
-            font-size: 16px;
-            font-weight: normal;
-            color: #313131;
-        }
-        .container{
-            width: 300px;
-            position: absolute;
-            left: calc(50% + 70px);
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .container > a{
-            width: 300px;
-            height: 200px;
-            padding: 20px;
-            background: #313131;
-            border-radius: 4px;
-            box-shadow: 2px 2px 13px rgba(0, 0, 0, .4);
-            cursor: pointer;
-            transition: .3s;
-        }
-        .container > a:nth-of-type(1) {
-            margin-bottom: 40px;
-        }
-        .container > a:hover{
-            box-shadow: 6px 6px 40px rgba(0, 0, 0, .4);
-        }
-        a > .title{
-            font-size: 20px;
-            color: #F7984C;
-            border-bottom: 1px solid #fff;
-            padding-bottom: 10px;
-        }
-        a > .content{
-            color: #9FA09F;
-            font-size: 13px;
-            padding-top: 10px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div id="header" class="header">
-            <h1>拼图游戏</h1>
-            <h2>GrapeCity</h2>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>拼图游戏简易入口 - GrapeCity</title>
+        <link rel="icon" type="image/png" href="favicon.png" sizes="32x32" />
+        <style>
+            body,
+            html {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                overflow: hidden;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                background-image: -webkit-linear-gradient(-75deg, #f7984c, #201912);
+            }
+            h1,
+            h2 {
+                padding: 0;
+                margin: 0;
+            }
+            body * {
+                box-sizing: border-box;
+            }
+            a {
+                text-decoration: none;
+            }
+            a:link,
+            a:active,
+            a:visited {
+                color: #000;
+            }
+            a,
+            span {
+                display: block;
+            }
+            .header {
+                position: absolute;
+                left: -160px;
+                top: 50%;
+                -webkit-writing-mode: vertical-rl;
+                writing-mode: vertical-rl;
+                transform: translateY(-50%);
+            }
+            .header > h1 {
+                font-size: 36px;
+                color: #313131;
+                border-left: 1px solid #fff;
+                padding-left: 6px;
+                text-shadow: -1px 1px 2px rgba(0, 0, 0, 0.2);
+            }
+            .header > h2 {
+                padding-right: 6px;
+                padding-top: 80px;
+                font-size: 16px;
+                font-weight: normal;
+                color: #313131;
+            }
+            .container {
+                width: 300px;
+                position: absolute;
+                left: calc(50% + 70px);
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .container > a {
+                width: 300px;
+                height: 200px;
+                padding: 20px;
+                background: #313131;
+                border-radius: 4px;
+                box-shadow: 2px 2px 13px rgba(0, 0, 0, 0.4);
+                cursor: pointer;
+                transition: 0.3s;
+            }
+            .container > a:nth-of-type(1) {
+                margin-bottom: 40px;
+            }
+            .container > a:hover {
+                box-shadow: 6px 6px 40px rgba(0, 0, 0, 0.4);
+            }
+            a > .title {
+                font-size: 20px;
+                color: #f7984c;
+                border-bottom: 1px solid #fff;
+                padding-bottom: 10px;
+            }
+            a > .content {
+                color: #9fa09f;
+                font-size: 13px;
+                padding-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="header" class="header">
+                <h1>拼图游戏</h1>
+                <h2>GrapeCity</h2>
+            </div>
+            <a href="./version_cut/index.html">
+                <span class="title">裁切方案</span>
+                <span class="content">
+                    完全符合题目要求，但丢失上传图片完整性。 <br />
+                    <br />
+                    为了保证图块可以有4种旋转姿态，则图块必须为正方形。由于上传图片宽高比以及自定义行列数的不确定性，必须进行裁切。
+                </span>
+            </a>
+            <a href="./version_noncut/">
+                <span class="title">非裁切方案</span>
+                <span class="content">
+                    不完全符合题目要求，但上传图片完整无缺。 <br />
+                    <br />
+                    由于上传图片宽高比以及自定义行列数的不确定性，如果图块可以是长方形，则90度及270这两个旋转姿态对于拼图而言并无意义，可以舍弃。
+                </span>
+            </a>
         </div>
-        <a href="./version_cut/index.html">
-            <span class="title">裁切方案</span>
-            <span class="content">
-                完全符合题目要求，但丢失上传图片完整性。
-                <br>
-                <br>
-                为了保证图块可以有4种旋转姿态，则图块必须为正方形。由于上传图片宽高比以及自定义行列数的不确定性，必须进行裁切。
-            </span>
-        </a>
-        <a href="./version_noncut/">
-            <span class="title">非裁切方案</span>
-            <span class="content">
-                不完全符合题目要求，但上传图片完整无缺。
-                <br>
-                <br>
-                由于上传图片宽高比以及自定义行列数的不确定性，如果图块可以是长方形，则90度及270这两个旋转姿态对于拼图而言并无意义，可以舍弃。
-            </span>
-        </a>
-    </div>
-</body>
+    </body>
 </html>
