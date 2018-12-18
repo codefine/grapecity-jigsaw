@@ -7,30 +7,41 @@ var blocks = new BlockGenerator();
 var rowControls = new NumberLifter('#row');
 var colControls = new NumberLifter('#col');
 
-var loader = new ImageLoader(function(info) {
-  var image = info.image;
-  var size = info.size;
+var loader = new ImageLoader(function() {
   var row = rowControls.getNumber();
   var col = colControls.getNumber();
-  // var row = rowControls.doSuggest(size);
-  // var col = colControls.doSuggest(size);
-  // loader.showSnack('加载图片成功，推荐难度:' + row + 'x' + col);
+  var info = loader.updateDrawing(row, col);
+  rowControls.onChange = function() {
+    var row = rowControls.getNumber();
+    var col = colControls.getNumber();
+    loader.reset();
+    loader.updateDrawing(row, col);
+  };
+  colControls.onChange = function() {
+    var row = rowControls.getNumber();
+    var col = colControls.getNumber();
+    loader.reset();
+    loader.updateDrawing(row, col);
+  };
+  loader.showSnack('拖拽图片至理想位置，开始游戏');
   game.gameProcessControl({
-    image: image,
+    image: info.image,
     onBeforeStart: function() {
       var row = rowControls.getNumber();
       var col = colControls.getNumber();
-      blocks.generateBlocks(image, size, row, col);
+      var info = loader.updateDrawing(row, col, true);
+      blocks.generateBlocks(info.image, info.size, row, col);
     },
     onStart: function() {
       blocks.disruptBlocks();
       blocks.emitter(game.onSuccess);
       loader.showSnack('计时开始');
     },
-    onSuccess: function(time) {
-      // console.log(time);
+    onSuccess: function() {
+      loader.reset();
     },
     onGiveup: function() {
+      loader.reset();
       blocks.showBackground();
     }
   });

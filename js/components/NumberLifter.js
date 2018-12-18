@@ -46,6 +46,7 @@ NumberLifter.prototype.applyValue = function(value) {
   this.valueEl.timer = setTimeout(function() {
     THIS.valueEl.classList.remove('_change');
   }, 150);
+  this.onChange && this.onChange(value);
 };
 
 NumberLifter.prototype.doSuggest = function(size) {

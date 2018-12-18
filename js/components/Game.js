@@ -16,6 +16,7 @@ Game.prototype.init = function() {
   this.timer = this.layer.querySelector('.timer');
   this.win = this.layer.querySelector('.win');
   this.uploadBtn = this.layer.querySelector('.upload');
+  this.recutBtn = this.layer.querySelector('.recut');
   this.startBtn = document.querySelector('#start');
   this.giveupBtn = document.querySelector('#giveup');
   this.hintBtn = document.querySelector('#hint');
@@ -92,6 +93,7 @@ Game.prototype.success = function() {
   this.win.classList.remove('_hide');
   this.intro.classList.add('_hide');
   this.uploadBtn.classList.add('_hide');
+  this.recutBtn.classList.add('_hide');
   this.timer.classList.remove('_hide');
   this.timer.innerHTML = '耗时: ' + this.getPassedTime() + '秒';
   clearTimeout(this.startBtn.timer);
@@ -100,6 +102,8 @@ Game.prototype.success = function() {
     THIS.panel.classList.remove('_start');
     THIS.container.classList.remove('_start');
     THIS.uploadBtn.classList.remove('_hide');
+    THIS.recutBtn.classList.remove('_hide');
+    THIS.startBtn.classList.add('_disabled');
   }, 800);
 };
 
@@ -115,5 +119,7 @@ Game.prototype.giveup = function() {
   this.panel.classList.remove('_start');
   this.container.classList.remove('_start');
   this.uploadBtn.classList.remove('_hide');
+  this.recutBtn.classList.remove('_hide');
+  this.startBtn.classList.add('_disabled');
   this.onGiveup && this.onGiveup();
 };

@@ -83,7 +83,6 @@ BlockGenerator.prototype.doHelp = function() {
   } else if (error.type === 'position') {
     this.addPositionHelper(error);
   }
-  console.log(error);
 };
 
 BlockGenerator.prototype.generateBlockState = function(block, id, width, height, left, top, rotation) {
@@ -189,7 +188,7 @@ BlockGenerator.prototype.disruptBlocks = function() {
   });
   this.state.forEach(function(block, i) {
     var position = [orderPositions[i].l, orderPositions[i].t];
-    var rotation = [0, 180][Math.round(Math.random())];
+    var rotation = [0, 90, 180, 270][Math.floor(Math.random() * 4)];
     THIS.moveBlock(block.el, position, rotation);
     THIS.updateBlockState(block.id, { l: position[0], t: position[1], r: rotation });
   });
@@ -300,7 +299,7 @@ BlockGenerator.prototype.swapBlocks = function(draggedState, replacedState) {
 };
 
 BlockGenerator.prototype.rotate = function(block) {
-  var rotation = block.r === 180 ? 0 : 180;
+  var rotation = block.r + 90;
   this.updateBlockState(block.id, { r: rotation });
   this.moveBlock(block.el, [block.l, block.t], rotation, true);
 };
