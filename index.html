@@ -18,6 +18,7 @@
                 margin: 0;
                 padding: 0;
                 background-image: -webkit-linear-gradient(-75deg, #f7984c, #201912);
+                background-image: -moz-linear-gradient(-75deg, #f7984c, #201912);
             }
             h1,
             h2 {
@@ -44,6 +45,7 @@
                 left: -160px;
                 top: 50%;
                 -webkit-writing-mode: vertical-rl;
+                -moz-writing-mode: vertical-rl;
                 writing-mode: vertical-rl;
                 transform: translateY(-50%);
             }
@@ -52,6 +54,8 @@
                 color: #313131;
                 border-left: 1px solid #fff;
                 padding-left: 6px;
+                -webkit-text-shadow: -1px 1px 2px rgba(0, 0, 0, 0.2);
+                -moz-text-shadow: -1px 1px 2px rgba(0, 0, 0, 0.2);
                 text-shadow: -1px 1px 2px rgba(0, 0, 0, 0.2);
             }
             .header > h2 {
@@ -66,6 +70,8 @@
                 position: absolute;
                 left: calc(50% + 70px);
                 top: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
             }
             .container > a {
@@ -74,6 +80,8 @@
                 padding: 20px;
                 background: #313131;
                 border-radius: 4px;
+                -webkit-box-shadow: 2px 2px 13px rgba(0, 0, 0, 0.4);
+                -moz-box-shadow: 2px 2px 13px rgba(0, 0, 0, 0.4);
                 box-shadow: 2px 2px 13px rgba(0, 0, 0, 0.4);
                 cursor: pointer;
                 transition: 0.3s;
@@ -82,6 +90,8 @@
                 margin-bottom: 40px;
             }
             .container > a:hover {
+                -webkit-box-shadow: 6px 6px 40px rgba(0, 0, 0, 0.4);
+                -moz-box-shadow: 6px 6px 40px rgba(0, 0, 0, 0.4);
                 box-shadow: 6px 6px 40px rgba(0, 0, 0, 0.4);
             }
             a > .title {

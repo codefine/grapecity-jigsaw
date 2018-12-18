@@ -35,3 +35,5 @@ var loader = new ImageLoader(function(info) {
     });
     
 });
+
+console.log('Author: Michael.Lu', 'Email: 277133779@qq.com');

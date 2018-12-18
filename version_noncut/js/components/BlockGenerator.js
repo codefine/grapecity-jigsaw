@@ -85,7 +85,6 @@ BlockGenerator.prototype.doHelp = function() {
     } else if (error.type === 'position') {
         this.addPositionHelper(error);
     }
-    console.log(error);
 };
 
 BlockGenerator.prototype.generateBlockState = function(block, id, width, height, left, top, rotation) {
