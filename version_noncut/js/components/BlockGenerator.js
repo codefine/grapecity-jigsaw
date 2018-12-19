@@ -63,6 +63,7 @@ BlockGenerator.prototype.addPositionHelper = function(error) {
     this.positionHelper.style.width = helperLength + 'px';
     this.positionHelper.style.left = helperPosition[0] + targetState.w / 2 + 'px';
     this.positionHelper.style.top = helperPosition[1] + targetState.h / 2 + 'px';
+    this.positionHelper.style.webkitTransform = 'rotate(' + helperRotation + 'deg)';
     this.positionHelper.style.transform = 'rotate(' + helperRotation + 'deg)';
 };
 
@@ -185,6 +186,7 @@ BlockGenerator.prototype.generateBlocks = function(image, size, row, col) {
 };
 
 BlockGenerator.prototype.clearBlocks = function() {
+    this.positionHelperShow = false;
     this.container.innerHTML = '';
     this.state = [];
 };
