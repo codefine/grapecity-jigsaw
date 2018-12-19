@@ -36,4 +36,5 @@ var loader = new ImageLoader(function(info) {
     
 });
 
-console.log('Author: Michael.Lu', 'Email: 277133779@qq.com');
+console.log('%c Michael.Lu ', 'background:#313131;color:#bada55');
+console.log('%c277133779@qq.com', 'color:#F52402');
